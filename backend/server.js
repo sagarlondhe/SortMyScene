@@ -29,14 +29,26 @@ const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:3000')
   .filter(Boolean);
 
 app.use(securityHeaders);
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+app.use(cors((req, callback) => {
+  const origin = req.header('Origin');
+  const host = req.header('Host');
+  let isAllowed = !origin;
+
+  if (origin) {
+    if (allowedOrigins.includes(origin)) {
+      isAllowed = true;
+    } else {
+      const originHost = origin.replace(/^https?:\/\//, '');
+      if (host && originHost === host) {
+        isAllowed = true;
+      }
     }
-    return callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
+  }
+
+  callback(null, {
+    origin: isAllowed,
+    credentials: true,
+  });
 }));
 app.use(express.json({ limit: '10kb' }));
 
