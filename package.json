@@ -1,11 +1,12 @@
 {
-  "name": "Event-Ticket-Booking-System",
+  "name": "sortmyscene",
   "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "build": "cd frontend && echo 'PWD:' && pwd && echo 'FILES:' && ls -la && echo 'PACKAGE.JSON:' && cat package.json && echo 'NODE_MODULES:' && ls node_modules || true && npm install && npm ls --depth=0",
-    "start": "cd backend && npm start"
-  },
-  "engines": {
-    "node": "22.x"
+    "build": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=backend"
   }
 }
