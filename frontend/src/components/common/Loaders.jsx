@@ -1,0 +1,72 @@
+import React from 'react';
+
+/**
+ * Loader Component - Loading spinner
+ */
+export const Loader = ({ size = 'md', className = '' }) => {
+  const sizeClasses = {
+    sm: 'w-6 h-6',
+    md: 'w-10 h-10',
+    lg: 'w-16 h-16',
+  };
+
+  return (
+    <div className={`flex items-center justify-center ${className}`}>
+      <svg
+        className={`animate-spin text-primary-600 ${sizeClasses[size]}`}
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        />
+      </svg>
+    </div>
+  );
+};
+
+/**
+ * Skeleton Loader Component - Loading placeholder
+ */
+export const Skeleton = ({ width = 'w-full', height = 'h-4', className = '' }) => (
+  <div className={`skeleton ${width} ${height} ${className}`} />
+);
+
+/**
+ * Card Skeleton - Loading state for event cards
+ */
+export const CardSkeleton = () => (
+  <div className="card space-y-4">
+    <Skeleton height="h-48" />
+    <Skeleton width="w-3/4" />
+    <Skeleton width="w-1/2" height="h-3" />
+    <div className="space-y-2">
+      <Skeleton width="w-2/3" height="h-3" />
+      <Skeleton width="w-1/2" height="h-3" />
+    </div>
+  </div>
+);
+
+/**
+ * Grid Skeleton - Loading state for grids
+ */
+export const GridSkeleton = ({ count = 4 }) => (
+  <div className="grid-auto-fit">
+    {Array.from({ length: count }).map((_, i) => (
+      <CardSkeleton key={i} />
+    ))}
+  </div>
+);
+
+export default Loader;
