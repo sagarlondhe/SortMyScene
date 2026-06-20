@@ -2,7 +2,7 @@
   "name": "Event-Ticket-Booking-System",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm ci && npm ls vite && npx vite build && cd ../backend && npm ci",
+    "build": "cd frontend && npm install vite react react-dom react-router-dom axios && npx vite build && cd ../backend && npm install",
     "start": "cd backend && npm start"
   },
   "engines": {
