@@ -2,10 +2,12 @@ services:
   - type: web
     name: Event-Ticket-Booking-System
     env: node
-    plan: starter
+    plan: free
     region: oregon
 
-    buildCommand: npm run build
+    # Explicitly install devDependencies first, as NODE_ENV=production
+    # would otherwise prevent npm from installing Vite/Tailwind in workspaces.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
 
     healthCheckPath: /api/health
@@ -13,6 +15,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+
+      - key: NODE_VERSION
+        value: 20
 
       - key: MONGODB_URI
         sync: false
@@ -24,4 +29,10 @@ services:
         value: 24h
 
       - key: RESERVATION_DURATION_MINUTES
-        value: 10
+        value: "10"
+
+      - key: CLIENT_URL
+        fromService:
+          type: web
+          name: Event-Ticket-Booking-System
+          property: host
