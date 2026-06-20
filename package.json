@@ -2,7 +2,7 @@
   "name": "Event-Ticket-Booking-System",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "build": "cd frontend && echo 'PWD:' && pwd && echo 'FILES:' && ls -la && echo 'PACKAGE.JSON:' && cat package.json && echo 'NODE_MODULES:' && ls node_modules || true && npm install && npm ls --depth=0",
     "start": "cd backend && npm start"
   },
   "engines": {
