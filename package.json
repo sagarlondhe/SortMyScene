@@ -1,0 +1,11 @@
+{
+  "name": "Event-Ticket-Booking-System",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install --include=dev && npm run build",
+    "postinstall": "cd backend && npm install --include=dev"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

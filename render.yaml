@@ -1,0 +1,28 @@
+services:
+  - type: web_service
+    name: Event-Ticket-Booking-System
+    env: node
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        fromService:
+          type: web_service
+          name: Event-Ticket-Booking-System
+          property: url
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: RESERVATION_DURATION_MINUTES
+        value: 10 

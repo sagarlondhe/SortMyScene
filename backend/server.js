@@ -10,6 +10,7 @@ const {
   requireProductionSecrets,
 } = require('./middleware/securityMiddleware');
 const expirationService = require('./services/expirationService');
+const path = require('path');
 
 const authRoutes = require('./routes/authRoutes');
 const eventRoutes = require('./routes/eventRoutes');
@@ -53,6 +54,16 @@ app.use('/api/auth', authRateLimiter, authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/reserve', reservationRoutes);
 app.use('/api/bookings', bookingRoutes);
+
+// Serve static files from frontend build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  
+  // Handle client-side routing
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+}
 
 app.use(errorHandler);
 
